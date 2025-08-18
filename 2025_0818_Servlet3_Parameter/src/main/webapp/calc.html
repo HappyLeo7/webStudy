@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title> 
+<script type="text/javascript">
+const regular_number=/^[0-9]{1,4}$/;
+
+	function send(f) {
+
+		let su1 = f.su1.value; // su1 값
+		let su2 = f.su2.value; // su2 값
+
+		if (regular_number.test(su1) == false) {
+			alert("0~9999 사이 숫자만 입력")
+			f.su1.value = ""
+			f.su1.focus();
+			return;
+		}
+		if (regular_number.test(su2) == false) {
+			alert("0~9999 사이 숫자만 입력")
+			f.su2.value = ""
+			f.su2.focus();
+			return;
+		}
+		f.method="GET"
+		f.submit();
+	}
+	</script>
+</head>
+<body>
+
+
+	<form action="calc2.do">
+		수 1 : <input name="su1"><br> 수 2 : <input name="su2"><br>
+		<br>
+		<!-- this.form해석 : this(계산하기 버튼)을 소유하고 있는 form -->
+		<input type="button" value="계산하기" onclick="send(this.form)">
+	</form>
+
+</body>
+</html>

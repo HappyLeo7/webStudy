@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+	function send1(f){
+		//alert(f.id.value);
+		//alert(f.pwd.value);
+		
+		/*
+			form attribute
+			- method : GET or POST
+			- action : 전송대상
+		
+			form method
+			- submit() : form요소정보를 지정된 action으로 전송
+			- reset() : form요소정보를 초기화
+			
+		*/
+		
+		
+		//전송방식
+		f.method="GET";
+			// GET 방식 : QueryString 방식  , Query는 질의의 뜻을 가진다?
+			// life.do?id=hong&pwd=1234
+			//		  ?name=value&name=value
+			// 		  ?query(질의)
+			//		단점) 전송용량의 제한이 있다(4096 byte):브라우저마다 버퍼용량이 다르기때문에 용량은 조금 다를수 있다.
+					
+		//전송대상
+		//f.action = "http://localhost:8080/2025_0818_servlet2_lifeCycle/life.do";  //같은 위치이기 때문에 생략
+		//현재실행되는 파일 위치와 호출해야될 서블릿 위치가 동일하면 경로 생략가능
+		f.action = "life.do";
+		
+		//지정된 action으로 전송
+		f.submit();
+		
+	} //end : send1() 
+	
+	function send2(f){
+		//alert(f.id.value);
+		//alert(f.pwd.value);
+		
+		/*
+			form attribute
+			- method : GET or POST
+			- action : 전송대상
+		
+			form method
+			- submit() : form요소정보를 지정된 action으로 전송
+			- reset() : form요소정보를 초기화
+			
+		*/
+		
+		
+		//전송방식
+		f.method="POST";
+			
+			//POST 방식 : 요청헤더(body) 숨겨서 전송(보안성이 좋다)
+			//			파일업로드시에는 무조건 POST방식을 이용한다.
+			//			장점) 전송용량의 제한이 없다.
+			//			단점) GET에 비해서 전송속도가 느리다.
+					
+		//전송대상
+		//f.action = "http://localhost:8080/2025_0818_servlet2_lifeCycle/life.do";  //같은 위치이기 때문에 생략
+		//현재실행되는 파일 위치와 호출해야될 서블릿 위치가 동일하면 경로 생략가능
+		f.action = "life.do";
+		
+		//지정된 action으로 전송
+		f.submit();
+		
+	} //end : send2() 
+	
+	
+	
+</script>
+</head>
+<body>
+
+<form method=POST>
+	아이디 : <input name="id" value="hong"><br>
+	비밀번호 : <input type="password" name="pwd" value="1234"><br>
+	<input type="button" value="GET 요청"  onclick="send1(this.form);">  
+	<input type="button" value="POST 요청" onclick="send2(this.form);"> 
+</form>
+
+</body>
+</html>
