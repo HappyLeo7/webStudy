@@ -18,9 +18,12 @@
     <%
     
     	//Script Let
-    	// _jspService()내의 영역
+    	// _jspService(HttpServletRequest request,HttpServletResponse response)내의 영역
+    	
     	int x=10;
     
+    	String ip = request.getRemoteAddr();
+    	System.out.println(application.getRealPath("/"));
     %>
     
 <!DOCTYPE html>

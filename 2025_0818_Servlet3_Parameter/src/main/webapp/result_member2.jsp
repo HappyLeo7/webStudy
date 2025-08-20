@@ -14,7 +14,7 @@
 		<caption>::::개인정보::::</caption>
 		<tr>
 			<th>이름</th>
-			<td>${map.name}</td>
+			<td>${requestScope.map.name}</td>
 		</tr>
 		<tr>
 			<th>아이디</th>

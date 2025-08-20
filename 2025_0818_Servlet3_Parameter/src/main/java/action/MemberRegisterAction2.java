@@ -101,7 +101,7 @@ public class MemberRegisterAction2 extends HttpServlet {
 		//request binding 연결
 		request.setAttribute("map", map);
 		
-		//출력은 result_member2.jsp 하라고 호출
+		//출력은 result_member2.jsp 하라고 호출 (포워드 시킴)
 		RequestDispatcher disp = request.getRequestDispatcher("result_member2.jsp");
 		disp.forward(request, response);
 	
