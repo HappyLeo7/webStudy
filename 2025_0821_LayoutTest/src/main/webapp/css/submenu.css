@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.sub_menu{
+	list-style: none;
+}
+
+.sub_menu>li>a{
+	display:block;
+	text-decoration: none;
+	width: 100px;
+	/* border: 1px solid red; */
+	color: white;
+	margin-left: 100px;
+	margin-top: 60px;
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: 1px 1px 2px black;
+}
+
+.sub_menu>li>a:hover{
+	color: #400040;
+}

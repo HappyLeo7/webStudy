@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+*{
+    margin:0;
+    padding:0;
+}
+
+#main_box{
+    width:1000px;
+    height:600px;
+    background-color: aquamarine;
+    
+    /* margin-left와 right가 동일한 크기가 적용되어
+       중앙으로 배치하게 됨 */
+    margin: auto;
+}
+
+#header{
+    /* 부모기준 */
+    width: 100%;
+    height:100px;
+    background-color: blanchedalmond;
+}
+#aside{
+    width:30%;
+    height: 400px;
+    background-color: brown;
+
+    /* 띄운다 */
+    float: left;
+}
+
+
+#content{
+    width: 70%;
+    opacity: 0.5;
+    /* 최소400px 아래로 안떨어진다. */
+    min-height: 400px;
+    height: auto;
+    background-color: chartreuse;
+    float: right;
+}
+
+#footer{
+    width: 100%;
+    height: 100px;
+    background-color: coral;
+    
+    /* float 정보 해지 */
+    clear: both;
+}
+
+#title{
+	text-align:center;
+	color: #4fffa7;
+	text-shadow: 2px 2px 2px black;
+	margin-top: 20px;
+}
