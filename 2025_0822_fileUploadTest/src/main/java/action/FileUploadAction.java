@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import util.FileUploadUtils;
 
@@ -35,7 +36,6 @@ public class FileUploadAction extends HttpServlet {
 			throws ServletException, IOException {
 
 		// TODO Auto-generated method stub
-		
         
         //parameter변수
         String filename="no_file";
