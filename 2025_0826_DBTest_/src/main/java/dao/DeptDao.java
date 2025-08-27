@@ -49,6 +49,7 @@ public class DeptDao {
 			
 			// 2. PreparedStatement 얻기
 			pstmt=conn.prepareStatement(sql);
+//			String sql = "select * from dept where id=? and pwd=?";  //prepareStatment 형식으로 하면 왼쪽 코드처럼 물음표로 처리하기때문에 해킹방지
 			
 			// 3. ResultSet 얻어오기
 			rs = pstmt.executeQuery();
