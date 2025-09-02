@@ -53,8 +53,72 @@
 .content{
 	min-height:80px;
 }
+</style><!-- end style -->
 
-</style>
+<script type="text/javascript">
+	function del(f){
+		let idx = f.idx.value;            // 게시물번호
+		let pwd = f.pwd.value;            // 게시물비밀번호
+		let c_pwd = f.c_pwd.value.trim(); // 확인비밀번호
+		
+		if(c_pwd==""){
+			alert("삭제할 게시물의 비밀번호를 입력하세요");
+			f.c_pwd.value="";
+			f.c_pwd.focus();
+			return;
+		}
+		
+		//비밀번호 맞는지 여부 체크
+		if(pwd != c_pwd){
+			alert("비밀번호가 일치하지 않습니다.")
+			//f.c_pwd.value="";
+			f.c_pwd.focus();	
+			return;
+		}
+		
+		//삭제 확인 confirm 함수 사용
+		if(confirm("정말 삭제 하시겠습니까?")==false){
+			return;
+		}
+		
+		//삭제 처리 요청 (삭제할 idx 번호만 넘기고 form으로 넘겨도 되지만 불필요한 데이터가 많이 전달되기때문에 get방식으로 idx만 넘긴다.)
+		location.href="delete.do?idx="+idx; //VisitDeleteAction 으로 보낸다.
+		
+		
+	}//end : del(f)
+	
+	function modify_form(f){
+		let idx = f.idx.value;            // 게시물번호
+		let pwd = f.pwd.value;            // 게시물비밀번호
+		let c_pwd = f.c_pwd.value.trim(); // 확인비밀번호
+		
+		if(c_pwd==""){
+			alert("수정할 게시물의 비밀번호를 입력하세요");
+			f.c_pwd.value="";
+			f.c_pwd.focus();
+			return;
+		}
+		
+		//비밀번호 맞는지 여부 체크
+		if(pwd != c_pwd){
+			alert("비밀번호가 일치하지 않습니다.")
+			//f.c_pwd.value="";
+			f.c_pwd.focus();	
+			return;
+		}
+		
+		//수정 확인하기
+		if(confirm("정말 수정 하시겠습니까?")==false){
+			return;
+		}
+		
+		//수정 처리 요청 (수정할 idx 번호만 넘기고 form으로 넘겨도 되지만 불필요한 데이터가 많이 전달되기때문에 get방식으로 idx만 넘긴다.)
+		location.href="modify_form.do?idx="+idx; //VisitModifyFormAction 으로 보낸다.
+		
+	} // end : modify_form()
+	
+</script> <!-- end : js -->
+
 </head>
 <body>
 	<div id="box">
@@ -81,6 +145,8 @@
 				<!-- 내용 -->
 				<div class="panel-body">
 					<form action="" class="form-inline">
+					<input type="hidden" name="idx" value=${vo.idx }>
+					<input type="hidden" name="pwd" value=${vo.pwd }>
 						<div class="common content">${vo.content }</div>
 						<!-- EL 일반데이터 바로 가져오기 -->
 						<div class="common regdate"><label>등록일자</label> : ${vo.regdate }</div>
@@ -89,8 +155,10 @@
 																			(${vo.ip })</div>
 						<div class="common pwd">
 							<label>비밀번호</label> : <input class="form-control" type="password" name="c_pwd">
-							 <input class="btn btn-info" type="button" value="수정"> 
-							 <input class="btn btn-danger" type="button" value="삭제">
+							 <input class="btn btn-info" type="button" value="수정"
+							 		onclick="modify_form(this.form);"> 
+							 <input class="btn btn-danger" type="button" value="삭제"
+							 		onclick="del(this.form)">
 						</div>
 					</form>
 				</div>

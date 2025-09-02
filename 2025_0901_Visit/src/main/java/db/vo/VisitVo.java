@@ -14,6 +14,7 @@ public class VisitVo {
 		super();
 	}
 
+	// insert용
 	public VisitVo(String name, String content, String pwd, String ip) {
 		super();
 		this.name = name;
@@ -22,6 +23,16 @@ public class VisitVo {
 		this.ip = ip;
 	}
 	
+	// update용
+	public VisitVo(int idx, String name, String content, String pwd, String ip) {
+		super();
+		this.idx = idx;
+		this.name = name;
+		this.content = content;
+		this.pwd = pwd;
+		this.ip = ip;
+	}
+
 	public int getIdx() {
 		return idx;
 	}

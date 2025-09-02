@@ -27,7 +27,7 @@ public class VisitListAction extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		//방명록 목록 가져오기
-		List<VisitVo> list = VisitDao.getinstance().selectList();
+		List<VisitVo> list = VisitDao.getInstance().selectList();
 		
 		//request binding
 		request.setAttribute("list", list);

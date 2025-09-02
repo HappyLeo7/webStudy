@@ -16,7 +16,7 @@ public class VisitDao {
 //single-ton
 	static VisitDao single = null;
 
-	public static VisitDao getinstance() {
+	public static VisitDao getInstance() {
 		if (single == null) {
 			single = new VisitDao();
 		}
@@ -39,7 +39,7 @@ public class VisitDao {
 
 		try {
 			// 1. Connection 얻어오기
-			conn = DBService.getinstance().getConnection();
+			conn = DBService.getInstance().getConnection();
 
 			// 2. PreparedStatement 얻기
 			pstmt = conn.prepareStatement(sql);
@@ -99,7 +99,7 @@ public class VisitDao {
 
 		try {
 			//1.Connection 얻어오기
-			conn = DBService.getinstance().getConnection();
+			conn = DBService.getInstance().getConnection();
 
 			//2.PreparedStatement얻기
 			pstmt = conn.prepareStatement(sql);
@@ -133,6 +133,155 @@ public class VisitDao {
 
 		return res;
 	}
+	
+	//삭제
+	public int delete(int idx) {
+
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		//											1 <-pstmt parameter index
+		String sql = "delete from 테이블명  where idx=?";
+
+		try {
+			//1.Connection 얻어오기
+			conn = DBService.getInstance().getConnection();
+
+			//2.PreparedStatement얻기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.PrepareStatement Parameter설정
+			pstmt.setInt(1, idx);
+
+			//4.DB delete
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return res;
+	}
+
+	
+	//idx에 해당하는 1건 데이터 조회
+	public VisitVo selectOne(int idx) {
+
+		VisitVo vo = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		//											1 <- pstmt index
+		String sql = "select * from Visit where idx=?";
+
+		try {
+			//1.Connection 얻어오기
+			conn = DBService.getInstance().getConnection();
+
+			//2.PreparedStatement얻기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.PrepareStatement Parameter설정
+			pstmt.setInt(1, idx);
+
+			//3.ResultSet 얻어오기
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				vo = new VisitVo();
+				//rs가 가리키는 레코드값을 vo에 넣는다
+				vo.setIdx(rs.getInt("idx"));
+				vo.setName(rs.getString("name"));
+				vo.setContent(rs.getString("content"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setIp(rs.getString("ip"));
+				vo.setRegdate(rs.getString("regdate"));
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return vo;
+	}
+
+
+	//update
+	public int update(VisitVo vo) {
+
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		//									1		  2		 3 	  4			   5  <-pstmt 파라메타 인덱스
+		String sql = "update visit set name=?,content=?, pwd=?,ip=?  where idx=?";
+
+		try {
+			//1.Connection 얻어오기
+			conn = DBService.getInstance().getConnection();
+
+			//2.PreparedStatement얻기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.PrepareStatement Parameter설정
+			pstmt.setString(1,vo.getName());
+			pstmt.setString(2,vo.getContent());
+			pstmt.setString(3,vo.getPwd());
+			pstmt.setString(4,vo.getIp());
+			pstmt.setInt(5, vo.getIdx());
+			
+			//4.DB update
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return res;
+	}
+	
 	
 	
 }//end class
