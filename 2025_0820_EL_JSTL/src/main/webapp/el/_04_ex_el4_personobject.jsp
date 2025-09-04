@@ -1,4 +1,4 @@
-<%@page import="db.vo.PersonVo"%>
+<%@page import="vo.PersonVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
