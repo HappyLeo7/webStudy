@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>Insert title here</title>
 <!-- Bootstrap3.x ver -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -34,52 +35,10 @@ label{
 	width : 80px;
 	
 }
-
 </style>
 <script type="text/javascript">
 	
-	
-	
-	/*//ID 체크하는곳() */
-	function check_id(){
-		let mem_id=$("#mem_id").val();
-		
-		//회원가입 버튼을 비활성화
-		$("#btn_register").prop("disabled",true);
-		
-		
-		if(mem_id.length<3){
-			$("#msg_id").html("id는 3글자 이상 지정해야합니다.").css("color","red")
-			return;
-		}
-		
-		$("#msg_id").html("");
-
-		//서버에 아이디 체크 요청
-		$.ajax({
-			
-			url : "check_id.do" //MemberCheckIdAction
-			,data : {"mem_id":mem_id} //check_id.do?mem_id=suh
-			,dataType : "json"
-			,success : function(res_data){
-				//res_data = {"result" : true} or {"result" : false}  
-				if(res_data.result){
-					//사용가능
-					$("#msg_id").html("사용가능한 아이디입니다.").css("color","blue");
-					$("#btn_register").prop("disabled",false);
-				}else {
-					//이미사용중
-					$("#msg_id").html("이미 사용중인 아이디입니다.").css("color","red");
-				}
-			}
-			,error : function(err){
-				alert(err.responseText);
-			}
-		})
-	
-	}//end : check_id()
-	
-	/* //주소검색API() */
+	/* 주소 API 함수 */
 	function find_addr(){
 		   new daum.Postcode({
 			   
@@ -93,17 +52,15 @@ label{
 		    }).open();
 	}//end : find_addr()
 	
-	/*//form 데이터 서버로 전송 */
+	/* 데이터 form에 담아서 서버에 보내는 함수 */
 	function send(f){
 		//fomr 데이터 가져오기
-		/* let mem_name=f.mem_name.value.trim(); */
-		let mem_name=document.getElementById("mem_name").value.trim();
+		let mem_name=f.mem_name.value.trim();
 		let mem_pwd=f.mem_pwd.value.trim();
 		let mem_email=f.mem_email.value.trim();
 		let mem_zippcode=f.mem_zippcode.value.trim();
 		let mem_addr =f.mem_addr.value.trim();
-		/* 이름 체크 */
-		alert(mem_name);
+		
 		
 		//입력값 검증작업(입력유무)
 		if(mem_name==""){
@@ -126,18 +83,35 @@ label{
 			return;
 		}
 		
-		
+		let chak_mag=confirm("정말 수정하시겠습니까?");
+		if(chak_mag==true){
+			
 		f.method="GET";
 		
 		
 		//전송대상지정
-		f.action = "insert.do"; // MemberInsertAction
+		f.action = "modify.do"; // MemberInsertAction
 		
 		//서버전송
 		f.submit();
+		}
 	}//end : send(f)
 	
+	
 </script>
+
+<!-- 초기화 처리 코드 -->
+<script type="text/javascript">
+	//window.onload //말고 다른걸 써보자
+	
+	//jquery 초기화 방법
+	$(document).ready(function(){
+		//회원구분의 값을 초기화
+		//<select id="mem_grade">
+		$("#mem_grade").val('${vo.mem_grade}');
+	});
+</script>
+
 </head>
 <body>
 	<form action="" class="form-inline">
@@ -145,32 +119,63 @@ label{
 
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h4>회원가입</h4>
+					<h4>회원정보수정창</h4>
 				</div>
 				<div class="panel-body">
+				
 					<div class="common">
-						<label>name</label> <input class="form-control" name="mem_name" id="mem_name">
+						<label>MemberNo</label> <input class="form-control" type="text" name="mem_idx" value="${vo.mem_idx }" readonly="readonly">
+					</div>					
+					<div class="common">
+						<label>Name</label> <input class="form-control" name="mem_name" value="${vo.mem_name }">
 					</div>
 					<div class="common">
-						<label>id</label> 
-						<input class="form-control" name="mem_id" id="mem_id" onkeyup="check_id();">
+						<label>Id</label> 
+						<input class="form-control" name="mem_id" id="mem_id" value="${vo.mem_id }" readonly="readonly">
 						<span id="msg_id"></span>
 					</div>
 					<div class="common">
-						<label>pwd</label> <input class="form-control" type="password" name="mem_pwd">
+						<label>Pwd</label> <input class="form-control" type="password" name="mem_pwd" value="${vo.mem_pwd }">
 					</div>
 					<div class="common">
-						<label>email</label> <input class="form-control" type="email" name="mem_email">
+						<label>Email</label> 
+						<input class="form-control" type="email" name="mem_email" value="${vo.mem_email }">
 					</div>
 					<div class="common">
-						<label>zippcode</label> <input class="form-control" name="mem_zippcode" id="mem_zippcode">
-						<input class="btn btn-primary" type="button" value="주소찾기" onclick="find_addr();">
-						<br><br><label>addr</label> <input size="65%" class="form-control" name="mem_addr" id="mem_addr">
+						<label>Zippcode</label>
+						 <input class="form-control" name="mem_zippcode" id="mem_zippcode" value="${vo.mem_zippcode }">
+						<input class="btn btn-primary" type="button" value="주소찾기" onclick="find_addr();">	
+						<br><br><label>addr</label> <input size="65%" class="form-control" name="mem_addr" id="mem_addr" value="${vo.mem_addr }">
+					</div>
+					
+					<!-- 회원등급 -->
+				<%-- 	<div class="common">
+						<label>Grade</label>
+						<select name="mem_grade" class="form-control" id="mem_grade">
+						<c:if test="${vo.mem_grade=='일반'}">
+							<option value="일반" selected="selected">일반</option>
+							<option value="관리자">관리자</option>
+						</c:if>
+						<c:if test="${vo.mem_grade=='관리자' }">
+							<option value="일반">일반</option>
+							<option value="관리자" selected="selected">관리자</option>
+						</c:if>
+						</select>
+						<input type="text" name="mem_grade" value="${vo.mem_grade }">
+					</div> --%>
+					
+					<div class="common">
+						<label>Grade</label>
+						<select name="mem_grade" class="form-control" id="mem_grade">
+							<option value="일반">일반</option>
+							<option value="관리자">관리자</option>
+					
+						</select>
 					</div>
 
 					<div class=common style="text-align: center;">
 						<input type="button" class="btn btn-success" value="목록보기" style="margin-right: 20px; " onclick="location.href='list.do'">
-						<input type="button" class="btn btn-info" value="회원가입" id="btn_register" disabled="disabled"
+						<input type="button" class="btn btn-info" value="수정하기" id="btn_register" 
 						onclick="send(this.form);">
 					</div>
 					

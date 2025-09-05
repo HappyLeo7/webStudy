@@ -1,4 +1,4 @@
-package action.mamber;
+package action.member;
 
 import java.io.IOException;
 
@@ -22,9 +22,7 @@ public class MemberCheckIdAction extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		//  /member/check_id.do?mem_id=suh
+		System.out.println("[MemberCheckIdAction 실행]");
 		
 		// 0. 수신인코딩 설정
 		request.setCharacterEncoding("utf-8");

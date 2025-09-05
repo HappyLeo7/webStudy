@@ -30,7 +30,7 @@ public class MemberDao {
 	
 	//전체조회
 	public List<MemberVo> selectList() {
-
+		System.out.println("[MemberDao selectList() 실행]");
 		List<MemberVo> list = new ArrayList<MemberVo>();
 
 		Connection conn = null;
@@ -89,7 +89,7 @@ public class MemberDao {
 	
 	//member에서 회원번호로 1개 조회
 	public MemberVo selectOne(int mem_idx) {
-
+		System.out.println("[MemberDao selectOne(int mem_idx) 실행]");
 		MemberVo vo = null;
 
 		Connection conn = null;
@@ -121,6 +121,7 @@ public class MemberDao {
 				vo.setMem_id(rs.getString("mem_id"));
 				vo.setMem_pwd(rs.getString("mem_pwd"));
 				vo.setMem_email(rs.getString("mem_email"));
+				vo.setMem_zippcode(rs.getString("mem_zippcode"));
 				vo.setMem_addr(rs.getString("mem_addr"));
 				vo.setMem_ip(rs.getString("mem_ip"));
 				vo.setMem_regdate(rs.getString("mem_regdate"));
@@ -152,7 +153,8 @@ public class MemberDao {
 	
 	//
 	public MemberVo selectOne(String mem_id) {
-
+		System.out.println("[MemberDao selectOne(String mem_id) 실행]");
+		
 		MemberVo vo = null;
 
 		Connection conn = null;
@@ -184,6 +186,7 @@ public class MemberDao {
 				vo.setMem_id(rs.getString("mem_id"));
 				vo.setMem_pwd(rs.getString("mem_pwd"));
 				vo.setMem_email(rs.getString("mem_email"));
+				vo.setMem_zippcode(rs.getString("mem_zippcode"));
 				vo.setMem_addr(rs.getString("mem_addr"));
 				vo.setMem_ip(rs.getString("mem_ip"));
 				vo.setMem_regdate(rs.getString("mem_regdate"));
@@ -209,6 +212,150 @@ public class MemberDao {
 		}
 
 		return vo;
+	}
+
+	
+	//추가
+	public int insert(MemberVo vo) {
+		System.out.println("[MemberDao insert(MemberVo vo) 실행]");
+		
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		//																   1 2 3 4 5 6 7 
+		String sql = "insert into member values(seq_member_mem_idx.nextval,?,?,?,?,?,?,?,sysdate,'일반')";
+
+		try {
+			//1.Connection 얻어오기
+			conn = DBService.getInstance().getConnection();
+
+			//2.PreparedStatement얻기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.PrepareStatement Parameter설정
+			pstmt.setString(1, vo.getMem_name());
+			pstmt.setString(2, vo.getMem_id());
+			pstmt.setString(3, vo.getMem_pwd());
+			pstmt.setString(4, vo.getMem_email());
+			pstmt.setString(5, vo.getMem_zippcode());
+			pstmt.setString(6, vo.getMem_addr());
+			pstmt.setString(7, vo.getMem_ip());
+			
+			//4.DB Insert
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return res;
+	}
+	
+	//삭제처리
+	public int delete(int mem_idx) {
+		System.out.println("[MemberDao.delet(int idx) 실행]");
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "delete from member where mem_idx=?";
+
+		try {
+			//1.Connection 얻어오기
+			conn = DBService.getInstance().getConnection();
+
+			//2.PreparedStatement얻기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.PrepareStatement Parameter설정
+			pstmt.setInt(1, mem_idx);
+
+			//4.DB delete
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return res;
+	}
+	
+	//수정처리
+	public int update(MemberVo vo) {
+
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		//										1			2		  3          4            5               6           7            8         9              10		
+		String sql = "update member set mem_idx=?, mem_name=?, mem_id=?, mem_pwd=?, mem_email=?, mem_zippcode=?, mem_addr=?, mem_grade=?, mem_ip=? where mem_idx=?";
+
+		try {
+			//1.Connection 얻어오기
+			conn = DBService.getInstance().getConnection();
+
+			//2.PreparedStatement얻기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.PrepareStatement Parameter설정
+			pstmt.setInt(1, vo.getMem_idx());
+			pstmt.setString(2, vo.getMem_name());
+			pstmt.setString(3, vo.getMem_id());
+			pstmt.setString(4, vo.getMem_pwd());
+			pstmt.setString(5, vo.getMem_email());
+			pstmt.setString(6, vo.getMem_zippcode());
+			pstmt.setString(7, vo.getMem_addr());
+			pstmt.setString(8, vo.getMem_grade());
+			pstmt.setString(9, vo.getMem_ip());
+			pstmt.setInt(10, vo.getMem_idx());
+			
+			
+			//4.DB update
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return res;
 	}
 	
 }//end : MemberDao class

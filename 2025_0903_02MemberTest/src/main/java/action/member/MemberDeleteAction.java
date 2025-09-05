@@ -1,7 +1,6 @@
-package action.mamber;
+package action.member;
 
 import java.io.IOException;
-import java.util.List;
 
 import db.dao.MemberDao;
 import db.vo.MemberVo;
@@ -13,10 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MemberListAction
+ * Servlet implementation class MemberDeletAction
  */
-@WebServlet("/member/list.do")
-public class MemberListAction extends HttpServlet {
+@WebServlet("/member/delet.do")
+public class MemberDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -24,16 +23,14 @@ public class MemberListAction extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		List<MemberVo> list = MemberDao.getInstance().selectList();
+		System.out.println("[MemberDeletAction service 실행]");
+		//삭제처리
+		int mem_idx=Integer.parseInt(request.getParameter("mem_idx"));
+		int res=MemberDao.getInstance().delete(mem_idx);
+		System.out.printf("mem_idx:%d",mem_idx);
+		System.out.printf("res:%d",res);
+		response.sendRedirect("list.do");
 		
-		//request binding
-		request.setAttribute("list", list);
-		System.out.println(list);
-		//dispatcher(forward)
-		String forward_page = "member_list.jsp";
-		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
-		disp.forward(request, response);
 
 	}
 

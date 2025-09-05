@@ -22,6 +22,7 @@ public class DBService {
 		
 	
 	private DBService() {
+		System.out.println("[싱글톤 DBService() 실행]");
 		// JNDI(java naming directory interface)기술
 		//			name이란 자원을 탐색 interface를 얻어내는 기술		
 		// context.xml에 적혀있는 name 을 가지고 활용

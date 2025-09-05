@@ -50,6 +50,9 @@ insert into member values (seq_member_mem_idx.nextval
 							,'일반'
 							);
 
+--DAO에 사용할 sql							
+insert into member values(seq_member_mem_idx.nextval,?,?,?,?,?,?,?,sysdate,'일반')
+							
 --전체조회							
 select * from member;
 
@@ -59,3 +62,7 @@ select * from member where mem_idx =1;
 select * from member where mem_id = 'suh';
 
 commit
+
+delete from member where idx
+
+update member set mem_idx=12, mem_name='a', mem_id='a', mem_pwd='1234', mem_email='a@a.com', mem_zippcode='a', mem_addr='a', mem_grade='일반' where mem_idx=12

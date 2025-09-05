@@ -9,10 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class MemberInsertFormAction
+ * Servlet implementation class MemberLoginFormAction
  */
-@WebServlet("/member/insert_form.do")
-public class MemberInsertFormAction extends HttpServlet {
+@WebServlet("/member/login_form.do")
+public class MemberLoginFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -20,10 +20,10 @@ public class MemberInsertFormAction extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("[MemberInsertFormAction 실행]");
-		
+		// TODO Auto-generated method stub
+
 		//dispatcher(forward)
-		String forward_page = "member_insert_form.jsp";
+		String forward_page = "member_login_form.jsp";
 		RequestDispatcher disp = request.getRequestDispatcher(forward_page);
 		disp.forward(request, response);
 

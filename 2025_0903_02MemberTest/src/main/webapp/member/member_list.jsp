@@ -18,7 +18,7 @@
 
 <style type="text/css">
 	#box{
-		width : 1000px;
+		width : 1200px;
 		margin : auto;
 		margin-top : 30px;
 	}
@@ -33,8 +33,38 @@
 		background-color: #999999;
 		color : white;
 	}
+	.btn-login{
+		width:80px;
+	}
+	td{
+	vertical-align: middle !important;
+	}
+	th{
+	vertical-align: middle !important;
+	text-align: center;
+	}
 	
 </style>
+
+<script type="text/javascript">
+	function mem_del(mem_idx){
+			if(confirm("회원정보를 정말 삭제하시겠습니까?")==false){
+				return;
+			}
+			
+			//삭제처리
+			location.href="delet.do?mem_idx="+mem_idx;
+	}
+	
+	function mem_modify(mem_idx){
+		if(confirm("회원정보를 정말 수정하시겠습니까?")==false){
+			return;
+		}
+		
+		//수정처리
+		location.href="modify_form.do?mem_idx="+mem_idx;
+	}
+</script>
 
 </head>
 <body>
@@ -43,9 +73,24 @@
 
 		<h1 id="title">회원목록</h1>
 		
-		<div style="margin-top: 50px; margin-bottom: 10px;">
-			<input class="btn btn-primary"type="button" value="회원가입"
-				onclick="location.href='insert_form.do'">
+		<div style="margin-top: 50px; margin-bottom: 10px; text-align: right;">
+		<!-- 로그인이 안된 경우 -->
+			<c:if test="${empty sessionScope.user_vo }">
+				<input class="btn btn-info btn-login" type="button" value="로그인"
+						onclick="location.href='login_form.do'">
+				<input class="btn btn-primary btn-login"type="button" value="회원가입"
+						onclick="location.href='insert_form.do'">
+			</c:if>
+
+		<!-- 로그인이 된 경우 
+			session에 MemberVo user가 저장
+		-->
+			<c:if test="${not empty sessionScope.user_vo }">
+				<b>${sessionScope.user_vo.mem_name }</b>님 환영합니다.
+				<input class="btn btn-info btn-login" type="button" value="로그아웃"
+						onclick="location.href='logout.do'">
+			</c:if>
+			
 		</div>
 		
 		<!-- 회원정보 출력 -->
@@ -61,6 +106,9 @@
 				<th>아이피</th>
 				<th>가입일자</th>
 				<th>회원등급</th>
+				<c:if test="${user_vo.mem_grade eq '관리자' }">
+				<th>편집</th>
+				</c:if>
 			</tr>
 			
 			<!-- data 출력-->
@@ -86,6 +134,10 @@
 				<td>${vo.mem_ip }</td>
 				<td>${vo.mem_regdate }</td>
 				<td>${vo.mem_grade }</td>
+				<c:if test="${user_vo.mem_grade eq '관리자' }">
+				<td><input class="btn btn-info" type="button" value="수정" onclick="mem_modify('${vo.mem_idx}');">
+				<input class="btn btn-danger" type="button" value="삭제" onclick="mem_del('${vo.mem_idx}');"></td>
+				</c:if>
 			</tr>
 			</c:forEach>
 		</table>
