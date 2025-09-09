@@ -25,6 +25,7 @@
 		<th>이미지</th>
 		<th>상품명</th>
 		<th>저자</th>
+		<th>판매가격</th>
 		
 	</tr>	
 	
@@ -40,8 +41,11 @@
 			 	<a href="${vo.link }" target="_blank">${vo.title }</a> 
 			</td>
 			<td>
-				
+				${vo.author }
 				<%-- <fmt:formatNumber type="currency" value="${vo.lprice }"/> --%>
+			</td>
+			<td>
+				<fmt:formatNumber type="currency" value="${vo.discount }"/> 
 			</td>
 		
 			
