@@ -14,7 +14,7 @@ import org.json.JSONObject;
 /**
  * Servlet implementation class TestJsonAction
  */
-@WebServlet("/")
+@WebServlet("/test")
 public class TestJsonAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

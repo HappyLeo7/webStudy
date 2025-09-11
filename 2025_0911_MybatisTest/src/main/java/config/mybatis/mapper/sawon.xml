@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sawon">
+
+<!-- 전체목록조회
+	resultType은 "포장할 타입" "패키지.Vo객체"
+ -->
+ <select id="sawon_list" resultType="vo.SawonVo">
+ select * from sawon
+ </select>
+ 
+<!-- Vo와 DB컬럼이 다를때  -->
+<!--  <resultMap type="vo.SawonVo" id="sawonMap">
+     propserty는 java Vo에있는 변수 , column은 DB 컬럼명
+ 	<result property="name" column="saname"/>
+ </resultMap>
+ 
+ <select id="sawon_list2" resultType="sawonMap">
+ select*from sawon
+ </select>
+ -->  
+
+<!-- 단일 parameter가 넘어오면 파라메터명을 아무거나 해도된다. -->
+<select id="sawon_list_deptno" parameterType="int" resultType="vo.SawonVo">
+	select * from sawon where deptno = #{ deptno }
+</select>
+
+<!-- map에 여러개 넣어서 할때 where문에 데이터가 null오면 데이터가 하나도 안오기때문에 문제가있을수 있다. -->
+<!-- <select id="sawon_list_condition" parameterType="Map" resultType="vo.SawonVo">
+	slect * from sawon 
+	where deptno = #{deptno} and sajob = #{sajob}
+</select> -->
+
+<!-- Dynamic Query (동적 쿼리) -->
+<select id="sawon_list_condition" parameterType="Map" resultType="vo.SawonVo">
+	select * from sawon
+	<trim prefix="where" prefixOverrides="and">
+		<if test="deptno!=null">
+			deptno = #{deptno} 
+		</if>
+		<if test="sajob!=null">
+			and sajob = #{sajob}
+		</if>
+		<if test="sasex!=null">
+			and sasex = #{sasex}
+		</if>
+		<if test="sahire!=null">
+			and concat(substr(to_char(sahire,'YYYY'),1,3),'0')=#{sahire}
+		</if>
+	</trim> 
+</select>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
