@@ -20,3 +20,5 @@ where concat(substr(to_char(sahire,'YYYY'),1,3),'0')=1980
 
 
 select substr(sahire,1,2) from sawon
+
+select * from visit

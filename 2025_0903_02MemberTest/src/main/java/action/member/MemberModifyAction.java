@@ -45,7 +45,7 @@ public class MemberModifyAction extends HttpServlet {
 		//System.out.printf("%d,%s,%s,%s,%s,%s,%s,%s\n",mem_idx,mem_name,mem_id,mem_pwd,mem_email,mem_zippcode,mem_addr,mem_grade);
 		
 		/* MemberVo에 수정폼에서 받아온 데이터를 넣을수 있는 생성자를 만든다. */
-		MemberVo vo= new MemberVo(mem_idx, mem_name, mem_id, mem_pwd, mem_email, mem_zippcode, mem_addr, mem_grade,mem_ip);
+		MemberVo vo= new MemberVo(mem_idx, mem_name, mem_id, mem_pwd, mem_email, mem_zippcode, mem_addr,mem_ip, mem_grade);
 		
 		MemberDao.getInstance().update(vo);
 		

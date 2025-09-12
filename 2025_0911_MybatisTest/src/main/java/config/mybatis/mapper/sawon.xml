@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- Dynamic Query (동적 쿼리) -->
 <select id="sawon_list_condition" parameterType="Map" resultType="vo.SawonVo">
 	select * from sawon
-	<trim prefix="where" prefixOverrides="and">
+	<trim prefix="where" prefixOverrides="and|or"> <!-- and | or | 등등  ' | ' 이용해서 여러개 사용가능 해당 문자가 들어가면 trim(제거)해주는거다   -->
 		<if test="deptno!=null">
 			deptno = #{deptno} 
 		</if>
