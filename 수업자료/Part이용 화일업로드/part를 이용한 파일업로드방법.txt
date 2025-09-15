@@ -1,0 +1,69 @@
+//[######################저장하려는 파일크기정보 설정하기 ########################]
+//서블릿3.0버전 어노테이션
+@MultipartConfig(location = "/", 
+					fileSizeThreshold = 1024 * 1024, // 1메가
+					maxFileSize = 1024 * 1024 * 5, // 5메가//단일파일의 최대용량
+					maxRequestSize = 1024 * 1024 * 5 * 5) //25메가
+
+location = 임시경로
+fileSizeThreshold : 1M 설정크기보다 큰파일이 업로드되면 임시파일로 저장
+		지정된 크기보다 작은 파일이 업로드되면 임시파일로 메모리에 적재
+
+maxFileSize : 1개 파일의 최대용량
+maxRequestSize :전체용량(일반파라메타 + 업로드된파일의 총량)
+
+//[=================업로드 코드=======================] 
+
+ //parameter변수
+        String filename="no_file";
+        //String filename2="no_file";
+        String title="";
+        
+        //저장경로..   // 웹경로 , 물리적경로 2개가 있다. 파일 저장은 절대경로로 해야한다.
+        //전역객체 (현재 웹컨텍스트)를 관리하는 객체
+        ServletContext application = request.getServletContext();
+        
+        // 현재 웹프로그램 실제경로
+        System.out.println(application.getRealPath(""));
+        
+        
+        
+        String saveDir = request.getServletContext().getRealPath("/upload/");
+        //업로드경로
+        //System.out.println(saveDir);
+        
+        
+        request.setCharacterEncoding("utf-8");
+        String contentType = request.getContentType();
+        System.out.println(contentType);
+        
+        // /upload.do?title=병아리&photo=병아리.png
+        //파일 업로드 전송영역 contentType 이 "multipart/"으로 시작하면 참
+        if(contentType!=null && contentType.toLowerCase().startsWith("multipart/")) {
+        	
+        	//각각 파트 구해라 / 업로드된 파라메터 목록을 구한다(text/binary)
+        	Collection<Part> parts = request.getParts();
+        	
+        	for(Part part : parts) {
+        		
+        		System.out.println(part.getHeader("Content-Disposition"));
+        		
+        		//upload화일이 있으면
+        		if(part.getHeader("Content-Disposition").contains("filename")) { //업로드된 파일 체크 contains("해당문자있는지 체크")
+
+        			if(part.getHeader("Content-Disposition").contains("photo")) {
+        			    filename = FileUploadUtils.saveFile(part, saveDir, "photo");
+        			}
+        			
+//        			if(part.getHeader("Content-Disposition").contains("photo2")) {
+//        			   filename2 = FileUploadUtils.saveFile(part, saveDir, "photo2");
+//        			}
+        				
+
+        		}else { //일반 파라메터면
+        			//String formValue = request.getParameter(part.getName());
+        			title = request.getParameter("title");
+        		}
+        		
+        	}
+        }//end:if

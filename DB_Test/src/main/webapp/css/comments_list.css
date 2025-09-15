@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+table{
+	border: 1px solid black;
+}
+#main_box{
+	width:800px;
+	margin: auto;	
+}
+.comments_h2{
+	text-align: center;
+	margin-top: 20px;
+}
