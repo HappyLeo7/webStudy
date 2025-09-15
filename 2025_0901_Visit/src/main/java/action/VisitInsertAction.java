@@ -46,7 +46,11 @@ public class VisitInsertAction extends HttpServlet {
 		
 		//4.DB insert (DAO에게 시킨다)
 		// 리턴된 1을 받는다. / 받아두고 사용을 안해도 되지만 성공여부 체크할땐 사용할 수도 있다.
+<<<<<<< HEAD
 		int res = VisitDao.getinstance().insert(vo);
+=======
+		int res = VisitDao.getInstance().insert(vo);
+>>>>>>> branch 'master' of https://github.com/HappyLeo7/webStudy.git
 		
 		
 		//Redirect : 목록보기로 재접속정보를 응답

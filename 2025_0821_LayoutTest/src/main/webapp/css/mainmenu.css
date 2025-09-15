@@ -1,0 +1,25 @@
+@charset "UTF-8";
+#main_menu{
+	/* list-style : square; */
+	list-style : none; /* 리스트표시 삭제*/
+}
+
+#main_menu > li{
+	display: inline-block;
+}
+
+#main_menu >li > a{
+	display : block;
+	text-decoration: none; /* 밑줄제거 */
+	width:120px;
+	/* border: 1px solid red; */
+	margin-left: 150px;
+	margin-top:8px;
+	text-align:center; /* a태그 중앙 정렬 */
+	font-size: 25px;
+	color:#800080	;
+	text-shadow: 1px 1px 2px #000000;
+}
+#main_menu >li > a:hover{
+	color:#0535d8;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	function send(f){
+		/* 데이터 체크 */
+		let title=f.title.value.trim();
+		let photo = f.photo.value;
+
+		
+		if(title==""){
+			alert("제목을 입력하세요!");
+			f.title.value=""; //값초기화
+			f.title.focus(); //포커스지정
+			return;
+		}
+		
+		if(photo==""){
+			alert("사진을 선택하세요!")
+					console.log(photo);
+		console.log(photo1);
+		console.log(photo2);
+			return;
+		}
+		
+		//전송대상 설정
+		f.action="upload.do" //FileUpload2Action(서블릿)
+		
+		//전송
+		f.submit();
+		
+	}
+</script>
+</head>
+<body>
+
+<!-- 파일 업로드시 꼭 해야할 설정
+	1. method="POST"  : 데이터 크기 전송에 제한이 없음
+	2. enctype="multipart/form-data" : 인코딩타입
+ -->
+
+<!-- <form action="" method="POST" enctype="application/x-www-form-urlencoded"> 여기서 enctype이 GET방식이기때문에 오류난다. -->
+<!--  enctype타입을 "multipart/form-data"라고 하는 타입은 전송하는 파라미터를 한파트별로 전송한다 -->
+	<form method="POST" enctype="multipart/form-data"> 
+		Title : <input name="title"> <br>
+		photo1 : <input type="file" name="photo1"> <br>
+		photo2 : <input type="file" name="photo2"> <br>
+		
+		<input type="button" value="전송" onclick="send(this.form);">
+		
+	</form>
+</body>
+</html>

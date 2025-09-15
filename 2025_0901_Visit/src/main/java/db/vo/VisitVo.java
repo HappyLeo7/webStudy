@@ -14,6 +14,7 @@ public class VisitVo {
 		super();
 	}
 
+<<<<<<< HEAD
 	public VisitVo(String name, String content, String pwd, String ip) {
 		super();
 		this.name = name;
@@ -22,6 +23,27 @@ public class VisitVo {
 		this.ip = ip;
 	}
 	
+=======
+	// insert용
+	public VisitVo(String name, String content, String pwd, String ip) {
+		super();
+		this.name = name;
+		this.content = content;
+		this.pwd = pwd;
+		this.ip = ip;
+	}
+	
+	// update용
+	public VisitVo(int idx, String name, String content, String pwd, String ip) {
+		super();
+		this.idx = idx;
+		this.name = name;
+		this.content = content;
+		this.pwd = pwd;
+		this.ip = ip;
+	}
+
+>>>>>>> branch 'master' of https://github.com/HappyLeo7/webStudy.git
 	public int getIdx() {
 		return idx;
 	}

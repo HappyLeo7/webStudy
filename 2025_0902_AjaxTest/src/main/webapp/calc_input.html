@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript" src="js/httpRequest.js"></script>
+
+<script type="text/javascript">
+
+	//정규식 숫자만 들어와라
+	const regular_number = /^[0-9]{1,}$/;
+
+	//수받아와서 체크해보기
+	function fn_result(){
+		//수1,2받아오기
+		let su1 = document.getElementById("su1").value;
+		let su2 = document.getElementById("su2").value;
+		
+		if(regular_number.test(su1)==false){
+			alert("숫자만 입력하세요")
+			document.getElementById("su1").focus();
+			return;
+		}
+		if(regular_number.test(su2)==false){
+			alert("숫자만 입력하세요")
+			document.getElementById("su2").focus();
+			return;
+		}
+		
+		// Ajax를 이용해서 서버로 전송
+		let url = "calc.do";
+		let param="su1="+su1+"&su2="+su2;
+		
+		sendRequest(url,param,callback_result,"GET");
+		
+	}//end fn_result()
+	
+	function callback_result(){
+		console.log("readyState : "+xhr.readyState + "| status :" + xhr.status)
+		
+		// 서버로 부터 데이터가 클라이언트 측 xhr이 관리하는 저장소에
+		// 결과값 도착했다
+		if(xhr.readyState==4 && xhr.status==200){
+			let data=xhr.responseText;
+			
+			document.getElementById("disp").innerHTML =data;
+			
+		}
+		
+	}//end callback_result()
+	
+	
+	//jquery를 사용한 ajax
+	function fn_result_jquery(){
+		//수1,2받아오기
+		let su1 = $("#su1").val();//document.getElementById("su1").value;
+		let su2 = $("#su2").val();//document.getElementById("su2").value;
+		
+		if(regular_number.test(su1)==false){
+			alert("숫자만 입력하세요")
+			$("#su1").focus(); //document.getElementById("su1").focus();
+			return;
+		}
+		if(regular_number.test(su2)==false){
+			alert("숫자만 입력하세요")
+			$("#su2").focus(); //document.getElementById("su2").focus();
+			return;
+		}
+		
+		// jQuery Ajax 사용
+		$.ajax(
+		{
+			type:"POST"
+			,async:true //비동기
+			,url:"calc2.do" // 호출할 서버정보 (이동경로)
+			,data:{"su1":su1,"su2":su2} //전달인자(parameter) 넘길 데이터
+										//calc.do?su1=12&su2=2
+			,success:function(res_data){ //서버에서 받아온 값이 res_data에 들어간다.
+				$("#disp").html(res_data);
+			} //성공함수
+			,error:function(err){
+				alert(err.responseText);
+			} //실패함수
+		}		
+		
+		);
+		
+	}
+	
+	
+</script>
+<!-- jQuery CDN(Content Delivery Network) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+	수 1 : <input id="su1"> <br>
+	수 2 : <input id="su2"> <br>
+	<input type="button" value="계산해줘(XHR이용)" onclick="fn_result();">
+	<input type="button" value="계산해줘(JQuery Ajax이용)" onclick="fn_result_jquery();">
+	<hr>
+	<div id="disp"></div>
+</body>
+</html>

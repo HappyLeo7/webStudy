@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script type="text/javascript">
+    function send(f){
+    	let name = f.name.value.trim(); // trim(); 공백제거
+    	let id = f.id.value.trim(); // trim(); 공백제거
+    	let password = f.password.value.trim(); 
+    	let email = f.email.value;
+    	let introduce = f.introduce.value;
+    	
+    	if(name==""){
+    		alert("이름을 입력하세요!!")
+    		f.name.value="";
+    		f.name.focus();
+    		return;
+    	}
+    	if(id==""){
+    		alert("아이디를 입력하세요!!")
+    		f.id.value="";
+    		f.id.focus();
+    		return;
+    	}
+    	if(password==""){
+    		alert("비밀번호를 입력하세요!!")
+    		f.password.value="";
+    		f.password.focus();
+    		return;
+    	}
+    	if(email==""){
+    		alert("이메일을 입력하세요!!")
+    		f.email.value="";
+    		f.email.focus();
+    		return;
+    	}
+    	if(introduce==""){
+    		alert("자기소개를 입력하세요!!")
+    		f.introduce.value="";
+    		f.introduce.focus();
+    		return;
+    	}
+    	//서버 전송
+    	f.submit();
+    	
+    }//end : send
+    
+    
+    function send2(f){
+    	let name = f.name.value.trim(); // trim(); 공백제거
+    	let id = f.id.value.trim(); // trim(); 공백제거
+    	let password = f.password.value.trim(); 
+    	let email = f.email.value;
+    	let introduce = f.introduce.value;
+    	
+    	if(name==""){
+    		alert("이름을 입력하세요!!")
+    		f.name.value="";
+    		f.name.focus();
+    		return;
+    	}
+    	if(id==""){
+    		alert("아이디를 입력하세요!!")
+    		f.id.value="";
+    		f.id.focus();
+    		return;
+    	}
+    	if(password==""){
+    		alert("비밀번호를 입력하세요!!")
+    		f.password.value="";
+    		f.password.focus();
+    		return;
+    	}
+    	if(email==""){
+    		alert("이메일을 입력하세요!!")
+    		f.email.value="";
+    		f.email.focus();
+    		return;
+    	}
+    	if(introduce==""){
+    		alert("자기소개를 입력하세요!!")
+    		f.introduce.value="";
+    		f.introduce.focus();
+    		return;
+    	}
+
+    	//JSP(Java Server Page) : 서버(Servlet)기능을 갖는 Page(HTML)
+    	f.action="result_member.jsp";
+    	//서버전송
+    	f.submit();
+    	
+    }//end : send2
+    
+    function send3(f){
+    	let name = f.name.value.trim(); // trim(); 공백제거
+    	let id = f.id.value.trim(); // trim(); 공백제거
+    	let password = f.password.value.trim(); 
+    	let email = f.email.value;
+    	let introduce = f.introduce.value;
+    	
+    	if(name==""){
+    		alert("이름을 입력하세요!!")
+    		f.name.value="";
+    		f.name.focus();
+    		return;
+    	}
+    	if(id==""){
+    		alert("아이디를 입력하세요!!")
+    		f.id.value="";
+    		f.id.focus();
+    		return;
+    	}
+    	if(password==""){
+    		alert("비밀번호를 입력하세요!!")
+    		f.password.value="";
+    		f.password.focus();
+    		return;
+    	}
+    	if(email==""){
+    		alert("이메일을 입력하세요!!")
+    		f.email.value="";
+    		f.email.focus();
+    		return;
+    	}
+    	if(introduce==""){
+    		alert("자기소개를 입력하세요!!")
+    		f.introduce.value="";
+    		f.introduce.focus();
+    		return;
+    	}
+
+    	//JSP(Java Server Page) : 서버(Servlet)기능을 갖는 Page(HTML)
+    	f.action="member_register2.do";//MemberRegisterAction2
+    	//서버전송
+    	f.submit();
+    	
+    }//end : send3
+    </script>
+    
+    <style>
+        /*  inline 요소
+            : content크기만큼만 잡힌다(크기조절 못한다)
+            block 요소
+            : 1칸을 모두 차지하는 속성(크기조절 가능하다)
+        */
+        label{
+            display: inline-block;
+            width:110px;
+        }
+        textarea{
+            resize: none; /* 크기조절 못하게하는 코드*/
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <!-- form tag용도 : 서버로 데이터를 전송할 목적사용 -->
+    <!-- 1. form attribute(속성) 
+             action : 전송대상(누구에게) => 생략하면 (페이지인)자기 자신에게 전송
+             method : 전송방식 
+                        GET (생략시 기본값) : QuerySting방식
+                            http://localhost:8080/2025_0818_Servlet3_Parameter/member_register.do?name111=홍길동
+                                                                    name111=홍길동 => query라고한다
+                        POST : 전달데이터가 숨겨져서 전달 (보안목적)
+    -->
+       
+    <form action="member_register.do" method="GET">
+        <label for="">*이름</label>
+        <input type="text" id="irum" name="name" placeholder="이름을 입력하세요" required><br>
+
+        <label for="">*아이디</label>
+        <input type="text" name="id" placeholder="아이디를 입력하세요" required><br>
+        
+        <label for="">*비밀번호</label>
+        <input type="password"  name="password" placeholder="숫자10자 + 영문 10자 + 특수문자 2자 이상 입력하세요" required><br>
+        
+        <label for="">*이메일</label>
+        <input type="email" name="email" placeholder="이메일을 입력하세요" required><br>
+
+        <label for="">성별</label>
+        <input type="radio" name="gender" value="남자" checked>남자
+        <input type="radio" name="gender" value="여자">여자<br>
+        
+        <label for="">취미</label>
+        <input type="checkbox" name="hobby" value="독서">독서
+        <input type="checkbox" name="hobby" value="음악">음악
+        <input type="checkbox" name="hobby" value="운동">운동
+        <input type="checkbox" name="hobby" value="영화">영화
+        <input type="checkbox" name="hobby" value="낚시">낚시 <br>
+
+        <label for="">친구1 :</label><input name="friend" placeholder="친구이름1"> <br>
+        <label for="">친구2 :</label><input name="friend" placeholder="친구이름2"> <br>
+        <label for="">친구3 :</label><input name="friend" placeholder="친구이름3"> <br>
+        
+        <label for="">혈액형</label>
+            <select name="blood" id="">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="O">O</option>
+                <option value="AB">AB</option>
+            </select><br>
+
+        <label for="">*자기소개 :</label><br>
+        <textarea name="introduce" id="" rows="5" cols="100" placeholder="안녕하세요 ???입니다. 반갑습니다"></textarea>
+        <br>
+
+        <input type="button" value="회원가입(서블릿)" onclick="send(this.form);">
+        <input type="button" value="회원가입(JSP)" onclick="send2(this.form);">
+        <input type="button" value="회원가입(모델2)" onclick="send3(this.form);">
+        
+        <br>
+        <hr>
+        <label>좋지 못한 버튼들!</label>
+        <br>
+        <input type="submit" value="보내기">  
+        <br>
+        <input type="button" value="전송버튼1" onclick="this.form.submit()">
+        <br>
+        <button>전송버튼2</button>
+        
+        <hr>
+    </form>
+</body>
+</html>

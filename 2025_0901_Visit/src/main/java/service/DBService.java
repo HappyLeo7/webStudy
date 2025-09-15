@@ -13,7 +13,11 @@ public class DBService {
 	
 	//싱글톤으로 만든다 무잡이한 낭비를 버리기위해서
 	static DBService single =null;
+<<<<<<< HEAD
 	public static DBService getinstance() {
+=======
+	public static DBService getInstance() {
+>>>>>>> branch 'master' of https://github.com/HappyLeo7/webStudy.git
 		if(single==null) {
 			single=new DBService();
 		}

@@ -44,6 +44,21 @@ insert into visit values(seq_visit_idx.nextVal
 						,sysdate
 )
 insert into visit values(seq_visit_idx.nextVal,?,?,?,?,sysdate)
+<<<<<<< HEAD
 select * from visit order by idx desc
+=======
+
+--visit 테이블 전체 조회 내림차순 큰수부터 나열 
+select * from visit order by idx desc
+
+--삭제
+delete from visit where idx = 2
+
+-- 수정을 위해서 1개 조회하기
+select * from visit where idx = 51
+
+--수정
+update visit set name='응길동',content='응',pwd='dmd',ip='192.168.219.234' where idx=51
+>>>>>>> branch 'master' of https://github.com/HappyLeo7/webStudy.git
 
 commit

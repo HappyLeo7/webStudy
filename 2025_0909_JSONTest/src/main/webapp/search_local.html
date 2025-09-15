@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- Bootstrap3.x ver -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+	#box{
+		width:1000px;
+		margin:auto;
+		margin-top: 30px;
+		
+		
+		
+	}
+	
+</style>
+
+<script type="text/javascript">
+
+	/* 현재 자신의 위치정보 (GPS좌표) */
+	let latitude = 37.481166;
+	let longitude = 126.952147;
+	
+	//JQuery 초기화(현재 브라우져에 컨트롤 배치 완료되면)
+	$(document).ready(function(){
+		//브라우져가 실행되는 위치정보를 구한다.
+		//제한 사항 : http://localhost 또는 https://IP 또는 hostname
+		navigator.geolocation.getCurrentPosition((position) => {
+			  //doSomething(position.coords.latitude, position.coords.longitude);
+			  latitude=position.coords.latitude;
+			  longitude=position.coords.longitude;
+			  console.log("lat",latitude);
+			  console.log("lon",longitude);
+			  
+			});
+		
+		//Arrow Function(Lambda식):함축식
+		//navigator.geolocation.getCurrentPosition(function(position){});
+		//navigator.geolocation.getCurrentPosition((position)=>{});
+	});
+	
+	
+	function find(){
+		alert("검색버튼");
+		let query = $("#query").val().trim();
+		let page= $("#page").val();
+		let size= $("#size").val();
+		let radius = $("#radius").val();
+		
+		//Jquery 주의사항 : #selector # 누락하지 말것
+		//자바스크립트 주의사항 : 함수() 괄호 누락하지 말것
+		if(query==""){
+			alert("검색어를 입력하세요!!");
+			$("#query").val("");
+			$("#query").focus();
+			return;
+		}
+		
+		//Ajax 로 요청
+		$.ajax({
+			
+			url : "local/list.do" //LocalListAction
+			,data : {"query": query
+					,"page":page
+					,"size":size
+					,"radius":radius
+					,"latitude":latitude
+					,"longitude":longitude}
+			,success : function(res_data){
+				$("#display").html(res_data);
+			}
+			,error: function(err){
+				alert(err.reponseText);
+			}
+		})
+	}
+</script>
+
+
+</head>
+<body>
+
+<!-- boot3용 form -->
+<form class="form-inline">
+	<div id="box">
+		<div style="text-align:center;">
+		검색어:<input class="form-control" id="query">
+			 <input class="btn btn-primary" type="button" value="검색" onclick="find();">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		페이지 : <select id="page" class="form-control">
+					<option value="1">1 페이지</option>			
+					<option value="2">2 페이지</option>			
+					<option value="3">3 페이지</option>			
+					<option value="4">4 페이지</option>			
+					<option value="5">5 페이지</option>			
+			   </select>
+	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    페이지당 게시물 수 : <select class="form-control" id="size">
+	    					<option value="5">5개씩 보기</option>
+	    					<option value="10">10개씩 보기</option>
+	    					<option value="15">15개씩 보기</option>
+	    					<option value="20">20개씩 보기</option>
+	    				</select>
+	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		검색반경 : <select class="form-control" id="radius">
+					<option value="500">500m</option>
+					<option value="1000" selected="selected">1000m</option>
+					<option value="1500">1500m</option>
+					<option value="2000">2000m</option>
+				</select>		
+		</div>
+		<hr>
+		<div id="display">
+		
+		</div>
+	</div>
+</form>
+
+</body>
+</html>
